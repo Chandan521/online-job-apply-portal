@@ -1,6 +1,10 @@
+# Use PHP 8.2 with Apache
 FROM php:8.2-apache
 
-# Install system dependencies
+# Arguments to allow Composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     zip unzip curl git libzip-dev libpng-dev libonig-dev libxml2-dev \
     && docker-php-ext-install pdo pdo_mysql zip gd
@@ -11,19 +15,21 @@ RUN a2enmod rewrite
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy existing app
+# Copy project files into the container
 COPY . .
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html/storage
+# Set permissions for Laravel
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache
 
-# Install Composer
+# Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install dependencies
+# Install PHP dependencies (no dev, optimized for production)
 RUN composer install --no-dev --optimize-autoloader
 
 # Expose port 80
 EXPOSE 80
 
+# Start Apache
 CMD ["apache2-foreground"]
