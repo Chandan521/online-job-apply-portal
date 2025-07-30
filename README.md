@@ -108,7 +108,7 @@ This is a full-featured Online Job Application Portal inspired by platforms like
 ---
 
 ## 📦 Installation
-
+add pusher credentials in .env for setup
 ```bash
 git clone https://github.com/your-username/job-portal.git
 cd job-portal
@@ -117,3 +117,24 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
 php artisan storage:link
+
+## Credentials 
+For Testing Purpose Only
+This Site is now undermaintain
+live Site Url
+https://test-project-cm.wuaze.com/
+
+admin Url 
+https://test-project-cm.wuaze.com/admin/login
+
+Admin 
+admin@admin.com
+Admin@123
+
+Recruiter ( Company )
+chandanmondal0021@gmail.com
+Recruiter@123
+
+User (Job Seeker )
+chandanmondal521@gmail.com
+User@123
